@@ -1,0 +1,31 @@
+{
+  "name": "original-coast-clothing",
+  "version": "1.0.0",
+  "description": "A sample bot to show how to build great Messenger experience",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "camelcase": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "i18n": "^0.8.3",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
+  },
+  "engines": {
+    "node": ">=10.x"
+  },
+  "repository": {
+    "url": "https://github.com/wenlock/vinotinto-project/"
+  },
+  "author": "Facebook",
+  "license": "ISC",
+  "keywords": [
+    "messenger",
+    "webhook"
+  ]
+}
