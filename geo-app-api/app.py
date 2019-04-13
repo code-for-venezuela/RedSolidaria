@@ -3,11 +3,12 @@ from flask import Flask
 app = Flask(__name__)
 
 @app.route("/")
-    return "you've reached c4v api app"
+def index():
+    return "you've reached c4v geo api app"
 
 @app.route("/sayhelo")
 def hello():
-    return "Flask inside Docker!!"
+    return "Hola Code for Venezuela!!!"
 
 
 if __name__ == "__main__":
