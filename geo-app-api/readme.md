@@ -20,3 +20,13 @@ make build
 ```
 make server
 ```
+
+### Heroku deployment
+
+This requires a heroku cli and heroku setup for your repo to deploy.
+
+Here are some steps for connecting your heroku app:
+
+```
+make publish
+```
