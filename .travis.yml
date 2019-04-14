@@ -17,6 +17,5 @@ deploy:
   provider: script
   script: "./script/deploy.sh"
   on:
+    branch: master
     # condition: "$TARGET_DIR == './messenger-app'"
-    # branch: master
-    all_branches: true
