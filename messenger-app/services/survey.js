@@ -10,7 +10,7 @@ const
 module.exports = class Survey {
 
   static genAgentRating(agent) {
-    let response = Response.genQuickReply('Como esta todo?',
+    let responses = [Response.genQuickReply('Como esta todo?',
       [{
           "title": "😀",
           "payload": "CSAT_GOOD"
@@ -24,7 +24,7 @@ module.exports = class Survey {
           "payload": "CSAT_BAD"
         }
       ]
-    )
+    )]
 
     // This is only triggered 1 min after talking with an agent
     response.delay = '60000';
