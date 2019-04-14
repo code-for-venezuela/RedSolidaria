@@ -73,19 +73,32 @@ app.post('/webhook', (req, res) => {
 
       // Gets the body of the webhook event
       let webhookEvent = entry.messaging[0];
-      console.log(webhookEvent);
+      
+      // ditch uninteresting events
+      if ("read" in webhookEvent) {
+        console.log("got a read");
+        return;
+      }
+      if ("delivery" in webhookEvent) {
+        console.log("got a delivery");
+        return;
+      }
+      console.log("webhookEvent: ", webhookEvent);
 
       // Get the sender PSID
       let senderPsid = webhookEvent.sender.id;
       console.log('Sender PSID: ' + senderPsid);
 
-      GraphAPi.getPersonProfile(senderPsid).then(personProfile => {
-        person.setProfile(personProfile);
-        console.log(person);
+      // GraphAPi.getPersonProfile(senderPsid).then(personProfile => {
+      //   person.setProfile(personProfile);
+      //   console.log(person);
 
-        let receiveMessage = new Receive(senderPsid, webhookEvent);
-        return receiveMessage.handleMessage();
-      })
+      //   let receiveMessage = new Receive(senderPsid, webhookEvent);
+      //   return receiveMessage.handleMessage();
+      // });
+      
+      let receiveMessage = new Receive(senderPsid, webhookEvent);
+      return receiveMessage.handleMessage();
     });
 
   } else {
