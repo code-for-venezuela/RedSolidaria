@@ -21,6 +21,18 @@ def index():
 def hello():
     return "Hola Code for Venezuela!!!"
 
+# just a simple ping route
+@app.route("/ping")
+def ping():
+    return jsonify({"status":"OK"})
+
+# We need to be able to take inputs, so this is just a sample
+# function that demo's how to get JSON from input
+@app.route("/json_get", methods=['GET', 'POST'])
+def json_get():
+    content = request.json
+    return jsonify({"status":"OK"})
+
 # TODO move this to a module
 # example : http://localhost:5000/revgeocode?lat=12&long=12
 @app.route("/revgeocode")

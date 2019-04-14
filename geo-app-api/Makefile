@@ -1,7 +1,7 @@
 build:
 	docker build -t geo-app-api .
 
-server:
+server: build
 	echo "starting a local server"
 	docker run --rm -e PORT=5000 -p 5000:5000  geo-app-api
 
