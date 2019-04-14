@@ -3,7 +3,7 @@ build:
 
 server:
 	echo "starting a local server"
-	docker run --rm -e PORT=5000 -p 5000:5000  geo-app-api
+	docker run --rm -e GOOGLE_TOKEN_PICKLE -e PORT=5000 -p 5000:5000  geo-app-api
 
 publish:
 	heroku container:login
