@@ -30,6 +30,8 @@ def spread_extract(spread_id, sheet_name):
     return values
 
 #convert list extracted from the Google Spreadsheet to a Pandas dataframe
+## Limitations of the function: All blank cells must be filled with a value. Remember that the encoding is UTF-8, so column names in the Pd dataframe require an 'u' prefix: u'Dirección'.
+ 
 def list_to_df(values):
     header = values[0]   # Assumes first line is header!
     data = values[1:]  # Everything else is data.
