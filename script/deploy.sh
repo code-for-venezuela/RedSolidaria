@@ -20,6 +20,4 @@ cd "${TARGET_DIR}"
 heroku --version
 pwd
 generate_netrc
-cat $HOME/.netrc
-echo "lets try login"
-heroku container:login
+make publish
