@@ -9,9 +9,12 @@ echo "Working with ${SERVER_PORT}"
 
 # generate a pickle file
 # we use the environment variable GOOGLE_TOKEN_PICKLE
-cat > ./token.pickle << PICKLE
+cat > ./token.pickle2 << PICKLE
 ${GOOGLE_TOKEN_PICKLE}
 PICKLE
+iconv -f ISO-8859-1 -t UTF-8  ./token.pickle2 > ./token.pickle
+rm ./token.pickle2
 ls -altr ./token.pickle
+cat ./token.pickle
 echo "Starting up server"
 exec python app.py
