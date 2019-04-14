@@ -13,6 +13,17 @@ from google.auth.transport.requests import Request
 
 app = Flask(__name__)
 
+#Scope for the Google Docs API to work
+scopes =  ['https://www.googleapis.com/auth/spreadsheets.readonly']
+
+#Credentials for the Google Docs API, it requires a token file
+token = open('token.pickle', 'rb')
+creds = pickle.load(token)
+ 
+
+#extract information from a Google spreadsheet
+
+
 # TODO move this to a module
 # TODO write some test cases for this
 def reverseGeocode(coordinates):
