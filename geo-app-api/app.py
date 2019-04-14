@@ -19,19 +19,20 @@ from google.auth.transport.requests import Request
 app = Flask(__name__)
 
 #function for city to coordinates
-def geocoder:
+def geocoder(city, state):
     place = (city, state)
     g = geocoder.google(place, key = ['GOOGLE_API_KEY'])
     result = g.latlng
     pprint.pprint(result)
 
-def address_to_coordinates:
+def address_to_coordinates(address):
     API_key = os.environ['GOOGLE_API_KEY']
     params = {}
     #This is hardcoded! Change the input address here
-    params["address"] = "Av. Boyacá #80-94, Bogotá, Colombia"
+    # params["address"] = "Av. Boyacá #80-94, Bogotá, Colombia"
+    params["address"] = address
     gmaps = googlemaps.Client(key=API_key)._request("/maps/api/geocode/json", params).get("results", [])
-    pprint.pprint(gmaps[0]['geometry']['location'])
+    return gmaps[0]['geometry']['location']
 
 # constants
 #Scope for the Google Docs API to work
@@ -91,24 +92,26 @@ def reverseGeocode(coordinates):
 #
 #     distance(origins, (destination["lat"],destination["long"]))
 
+
 def distance(origins, destination):
     try:
         API_key = os.environ['GOOGLE_API_KEY']
 
+        app.logger.info('distance origins = %s, destination = %s', origins, destination)
         gmaps = googlemaps.Client(key=API_key)
 
         # call
         result = gmaps.distance_matrix(origins, destination, mode='walking')
-
         # result is in meters
+        app.logger.info("result -> %s", result)
         origin_result = result['origin_addresses']
         destination_result = result['destination_addresses']
         meters = result['rows'][0]['elements'][0]['distance']['value']
         distance_result = meters/1000
         list = {"origin" : origin_result, "destination" : destination_result, "distance in kilometers" : distance_result}
-        print(list)
+        return list
     except:
-        print("invalid")
+        return "invalid"
 
 
 @app.route("/")
@@ -118,9 +121,6 @@ def index():
 @app.route("/sayhelo")
 def hello():
     return "Hola Code for Venezuela!!!"
-
-@app.route("/distance")
-def get_distance(origins, destination):
 
 # TODO move this to a module
 # example : http://localhost:5000/revgeocode?lat=12&long=12
@@ -135,9 +135,26 @@ def revgecode():
     return json.dumps(r)
 
 # add a route to get a list organizations
-@app.route("/listorgs")
+# testing with http://localhost:5000/listorgs?data={ "lat":4.682, "lng":-74.0998}
+@app.route("/listorgs", methods=['GET', 'POST'])
 def listorgs():
-    return json.dumps(spread_extract("1-81VwUDn0daYXsjdLEQPxyt4LalQy_u6hRvPT1M4CyA", "mirror"))
+    app.logger.info('starting listorgs')
+    origin = json.loads(request.args.get('data'))
+    orgs_data = spread_extract("1-81VwUDn0daYXsjdLEQPxyt4LalQy_u6hRvPT1M4CyA", "mirror")
+
+    results = []
+    for index, org_data in enumerate(orgs_data, start=1):
+        app.logger.info('index is %d , org_data is %d', index, len(org_data))
+        address = org_data[11] # we know 11 is Dirección, so we can have a function for this later
+        app.logger.info('address is %s', address)
+        coordinate = address_to_coordinates(address)
+        dist = distance((origin["lat"], origin["lng"]), (coordinate["lat"], coordinate["lng"]))
+        org_entry = {}
+        org_entry = {"address": address, "origin": origin, "coordinate" : coordinate, "distance" : dist}
+        results.append(org_entry)
+
+    result = json.dumps(results)
+    return result
 
 if __name__ == "__main__":
     service_port = os.environ['SERVER_PORT']
