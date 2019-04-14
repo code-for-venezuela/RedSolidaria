@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 # importing necessary libraries
 import reverse_geocoder as rg
+import googlemaps
 import pprint
 import json
 import os
@@ -13,6 +14,18 @@ app = Flask(__name__)
 def reverseGeocode(coordinates):
     return rg.search(coordinates)
 
+def distance(origins, destination):
+    API_key = os.environ['GOOGLE_API_KEY']
+
+    gmaps = googlemaps.Client(key=API_key)
+
+    # call
+    result = gmaps.distance_matrix(origins, destination, mode='walking')
+
+    # result is in meters
+    pprint.pprint(result['rows'][0]['elements'][0]['distance']['value'])
+
+
 @app.route("/")
 def index():
     return "you've reached c4v geo api app"
@@ -20,6 +33,9 @@ def index():
 @app.route("/sayhelo")
 def hello():
     return "Hola Code for Venezuela!!!"
+
+@app.route("/distance")
+def get_distance(origins, destination):
 
 # TODO move this to a module
 # example : http://localhost:5000/revgeocode?lat=12&long=12
