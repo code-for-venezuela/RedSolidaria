@@ -11,14 +11,12 @@ ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /bin/tini
 RUN chmod +x /bin/tini
 
-
-ADD entrypoint.sh /bin/entrypoint.sh
-
 COPY requirements.txt /app/
 RUN  pip install -r requirements.txt
 
-
 # USER nobody
+# TODO : remove ADD token.pickle /app/token.pickle
+ADD entrypoint.sh /bin/entrypoint.sh
 COPY . /app
 
 # compile check for app.py
