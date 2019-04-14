@@ -2,3 +2,4 @@ flask
 reverse_geocoder
 pprint
 googlemaps
+geocoder

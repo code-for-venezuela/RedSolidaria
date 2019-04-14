@@ -6,24 +6,68 @@ import googlemaps
 import pprint
 import json
 import os
+import googlemaps
+import geocoder
 
 app = Flask(__name__)
 
+#function for city to coordinates
+def geocoder:
+    place = (city, state)
+    g = geocoder.google(place, key = ['GOOGLE_API_KEY'])
+    result = g.latlng
+    pprint.pprint(result)
+
+def address_to_coordinates:
+    API_key = os.environ['GOOGLE_API_KEY']
+    params = {}
+    #This is hardcoded! Change the input address here
+    params["address"] = "Av. Boyacá #80-94, Bogotá, Colombia"
+    gmaps = googlemaps.Client(key=API_key)._request("/maps/api/geocode/json", params).get("results", [])
+    pprint.pprint(gmaps[0]['geometry']['location'])
+
 # TODO move this to a module
 # TODO write some test cases for this
+#function for coordinates to city
 def reverseGeocode(coordinates):
-    return rg.search(coordinates)
+    result = rg.search(coordinates)
+
+    # result is a list containing ordered dictionary.
+    pprint.pprint(result)
+
+#This is for the input of the distance function
+# ###Starting point
+# #This is hardcoded!!! Change to input
+# LatOrigin = 37.772
+# LongOrigin = -122.405
+# origins = (LatOrigin, LongOrigin)
+#
+# #enter in destinations through json
+# destination_input = input("Enter json: ")
+# destination_list = json.loads(destination_input)
+#
+# for destination in destination_list["coordinates"]:
+#
+#     distance(origins, (destination["lat"],destination["long"]))
 
 def distance(origins, destination):
-    API_key = os.environ['GOOGLE_API_KEY']
+    try:
+        API_key = os.environ['GOOGLE_API_KEY']
 
-    gmaps = googlemaps.Client(key=API_key)
+        gmaps = googlemaps.Client(key=API_key)
 
-    # call
-    result = gmaps.distance_matrix(origins, destination, mode='walking')
+        # call
+        result = gmaps.distance_matrix(origins, destination, mode='walking')
 
-    # result is in meters
-    pprint.pprint(result['rows'][0]['elements'][0]['distance']['value'])
+        # result is in meters
+        origin_result = result['origin_addresses']
+        destination_result = result['destination_addresses']
+        meters = result['rows'][0]['elements'][0]['distance']['value']
+        distance_result = meters/1000
+        list = {"origin" : origin_result, "destination" : destination_result, "distance in kilometers" : distance_result}
+        print(list)
+    except:
+        print("invalid")
 
 
 @app.route("/")
