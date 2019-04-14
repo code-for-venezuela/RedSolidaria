@@ -54,7 +54,11 @@ app.post("/webhook", (req, res) => {
     body.entry.forEach(function(entry) {
       // Gets the body of the webhook event
       let webhookEvent = entry.messaging[0];
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 736150282a9982cdab93a503061f795d38909604
       // ditch uninteresting events
       if ("read" in webhookEvent) {
         console.log("got a read");
@@ -86,6 +90,7 @@ app.post("/webhook", (req, res) => {
           persons[senderPsid] = persons.setEmptyProfile(senderPsid);
         });
       }
+
       let receiveMessage = new Receive(senderPsid, webhookEvent);
       return receiveMessage.handleMessage();
     });
