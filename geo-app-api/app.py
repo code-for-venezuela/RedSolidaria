@@ -6,7 +6,23 @@ import pprint
 import json
 import os
 
+# for google sheets
+import pickle
+import pandas as pd
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+
 app = Flask(__name__)
+
+# constants
+#Scope for the Google Docs API to work
+scopes =  ['https://www.googleapis.com/auth/spreadsheets.readonly']
+
+#Credentials for the Google Docs API, it requires a token file
+token = open('token.pickle', 'rb')
+creds = pickle.load(token)
+
 
 # TODO move this to a module
 # TODO write some test cases for this

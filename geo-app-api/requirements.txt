@@ -1,3 +1,7 @@
 flask
 reverse_geocoder
 pprint
+pandas
+google-api-python-client
+google_auth_oauthlib
+google
