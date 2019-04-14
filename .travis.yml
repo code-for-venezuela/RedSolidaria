@@ -1,0 +1,21 @@
+language: python
+python:
+  - "3.6"
+env:
+  matrix:
+  - TARGET_DIR=./geo-app-api
+  - TARGET_DIR=./messenger-app
+  global:
+  - APP_VERSION=0.0.1
+install:
+- echo "nothing to install yet"
+- docker --version
+script:
+- sh -c "cd ${TARGET_DIR} && echo make build"
+
+deploy:
+  provider: script
+  script: "./script/deploy.sh"
+  on:
+    branch: production
+    # condition: "$TARGET_DIR == './messenger-app'"
