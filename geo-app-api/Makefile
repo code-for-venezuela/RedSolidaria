@@ -8,4 +8,4 @@ server:
 publish:
 	heroku container:login
 	heroku container:push web --app geo-app-api
-	heroku container:release web
+	heroku container:release web --app geo-app-api
