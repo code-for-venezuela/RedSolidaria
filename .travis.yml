@@ -11,11 +11,11 @@ install:
 - echo "nothing to install yet"
 - docker --version
 script:
-- sh -c "cd ${TARGET_DIR} && make build"
+- sh -c "cd ${TARGET_DIR} && echo make build"
 
 deploy:
   provider: script
   script: "./script/deploy.sh"
   on:
-    branch: master
+    branch: production
     # condition: "$TARGET_DIR == './messenger-app'"
