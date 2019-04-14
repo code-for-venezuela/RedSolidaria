@@ -26,4 +26,5 @@ RUN python -m py_compile app.py
 
 ENTRYPOINT ["/bin/tini", "-v", "--", "/bin/entrypoint.sh"]
 
+EXPOSE 5000
 CMD        [ "" ]
