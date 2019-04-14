@@ -22,7 +22,27 @@ creds = pickle.load(token)
  
 
 #extract information from a Google spreadsheet
+def spread_extract(spread_id, sheet_name):
+    service = build('sheets', 'v4', credentials=creds)
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=spread_id , range= sheet_name).execute()
+    values = result.get('values', [])
+    return values
 
+#convert list extracted from the Google Spreadsheet to a Pandas dataframe
+def list_to_df(values):
+    header = values[0]   # Assumes first line is header!
+    data = values[1:]  # Everything else is data.
+    all_data = []
+    for col_id, col_name in enumerate(header):
+        column_data = []
+        for row in values:
+            column_data.append(row[col_id])
+        ds = pd.Series(data=column_data, name=col_name)
+        all_data.append(ds)
+    df = pd.concat(all_data, axis=1)
+    print header
+    return df
 
 # TODO move this to a module
 # TODO write some test cases for this
