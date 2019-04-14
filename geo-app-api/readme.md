@@ -30,3 +30,7 @@ Here are some steps for connecting your heroku app:
 ```
 make publish
 ```
+
+### distance
+
+If you are calculating distance you should set a google API key with the environment variable GOOGLE_API_KEY.
