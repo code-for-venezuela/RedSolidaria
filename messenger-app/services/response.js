@@ -112,6 +112,16 @@ module.exports = class Response {
     return response;
   }
 
+  static genPhoneButton(title, payload) {
+    let response = {
+      type: "phone_number",
+      title: title,
+      payload: payload
+    };
+
+    return response;
+  }
+
   static genWebUrlButton(title, url) {
     let response = {
       type: "web_url",
@@ -123,20 +133,102 @@ module.exports = class Response {
   }
 
   static genNuxMessages() {
-    let welcome = this.genText(
-      "Bienvenido a Diaspora Venezuela, soporte a los inmigrantes"
-    );
+    return [
+      Response.genQuickReply(
+        "¡Bienvenido(a)! Te puedo recomendar servicios disponibles cerca de ti para Venezolanos. Para mejor ayudarte, necesito saber tu ubicación.",
+        [
+          {
+            content_type: "location"
+          },
+          {
+            title: "Por ciudad",
+            payload: "SELECT_CITY"
+          }
+        ]
+      )
+    ];
+  }
 
-    let guide = Response.genQuickReply("Indicanos tu ubicación", [
+  static genCitySelectMessage() {
+    let response = Response.genQuickReply("Seleccionar ciudad de una lista", [
       {
-        content_type: "location"
+        title: "Bogotá",
+        payload: "BOGOTA_SELECTED"
       },
       {
-        title: "No quiero indicar mi ubicación",
-        payload: "NO_LOCATION"
+        title: "Medellín",
+        payload: "MEDELLIN_SELECTED"
+      },
+      {
+        title: "Cartagena",
+        payload: "CARTAGENA_SELECTED"
+      },
+      {
+        title: "Cali",
+        payload: "CALI_SELECTED"
+      },
+      {
+        title: "Otra ciudad",
+        payload: "OTRA_CIUDAD_SELECTED"
       }
     ]);
+    return [response];
+  }
 
-    return [welcome, guide];
+  static genGotLocationMessage() {
+    let response = Response.genQuickReply(
+      "¡Gracias! Estas son las categorías de servicios disponibles cerca de tu ubicación:",
+      [
+        {
+          title: "Comida y Agua",
+          payload: "COMIDA_Y_AGUA"
+        },
+        {
+          title: "Hospedaje y Albergue",
+          payload: "HOSPEDAJE_Y_ALBERGUE"
+        },
+        {
+          title: "Salud",
+          payload: "SALUD"
+        },
+        {
+          title: "Educación",
+          payload: "EDUCATION"
+        },
+        {
+          title: "Empleo",
+          payload: "EMPLOYMENT"
+        },
+        {
+          title: "Inmigración",
+          payload: "IMMIGRATION"
+        },
+        {
+          title: "Ver todo",
+          payload: "VER_TODO"
+        }
+      ]
+    );
+    return [response];
+  }
+
+  static genLoggingBogotaMessage() {
+    let image_url =
+      "https://www.thehotelguru.com/_images/da/5e/da5e7682ad10b966697b6691c762d021/bogota-s1180x560.jpg";
+    let title = "Albergue Espiritu Santo";
+    let sub_title =
+      "Ofrece hospedaje por 24 horas con prioridad para niños, abuelos y mujeres embarazadas. Alimentación";
+    let buttons = [
+      this.genWebUrlButton("Dirección", "https://goo.gl/maps/kkh3sGEH5iq"),
+      this.genPhoneButton("Llamar (313) 811-5707", "+573138115707"),
+      this.genPostbackButton("Evaluar", "RATE")
+    ];
+    let response = Response.genGenericTemplate(
+      image_url,
+      title,
+      sub_title,
+      buttons
+    );
+    return [response];
   }
 };
