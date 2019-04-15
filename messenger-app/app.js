@@ -80,13 +80,18 @@ app.post("/webhook", (req, res) => {
           console.log("adding ", person.psid);
           persons[senderPsid] = person;
           let receiveMessage = new Receive(senderPsid, webhookEvent);
+          console.log('estoy aqui wejkejwkw', person);
           return receiveMessage.handleMessage();
         })
         .catch(err =>{
-          persons[senderPsid] = persons.setEmptyProfile(senderPsid);
+          persons[senderPsid] = person.setEmptyProfile(senderPsid);
+          console.log("estoy aqui dsldsks", persons[senderPsid]);
+          let receiveMessage = new Receive(senderPsid, webhookEvent);
+          return receiveMessage.handleMessage();
         });
+        return;
       }
-
+      console.log("estoy aqui skdskdjdks", persons[senderPsid]);
       let receiveMessage = new Receive(senderPsid, webhookEvent);
       return receiveMessage.handleMessage();
     });
