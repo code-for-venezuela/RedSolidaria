@@ -64,11 +64,13 @@ module.exports = class Receive {
 
     if (greeting && greeting.confidence > 0.8) {
       responses = Response.genNuxMessages();
+    } else if (message.includes("hola")) {
+      responses = Response.genNuxMessages();
     } else {
       responses = [Response.genText(`No entiendo ${message}`)].concat(
         Response.genNuxMessages()
       );
-      console.log("estoy aqui", responses);
+      console.log("estoy aqui 34u3", responses);
     }
 
     return responses;
@@ -76,24 +78,31 @@ module.exports = class Receive {
 
   // Handles mesage events with attachments
   handleAttachmentMessage() {
-    let response;
+    let responses = new Array();
 
     // Get the attachment
     let attachment = this.webhookEvent.message.attachments[0];
-    console.log(attachment);
+    console.log("estoy aqui kskdksjd", attachment);
 
-    response = Response.genQuickReply("enviaste un attachment", [
-      {
-        title: "primer",
-        payload: "FIRST_PAYLOAD"
-      },
-      {
-        title: "segundo",
-        payload: "SECOND_PAYLOAD"
-      }
-    ]);
-
-    return response;
+    if ("type" in attachment && attachment.type == "location") {
+      responses = responses.concat(Response.genGotLocationMessage());
+      console.log("estoy aqui sldsdsdlskdsld", responses);
+    } else {
+      responses = responses.push(
+        Response.genQuickReply("enviaste un attachment", [
+          {
+            title: "primer",
+            payload: "FIRST_PAYLOAD"
+          },
+          {
+            title: "segundo",
+            payload: "SECOND_PAYLOAD"
+          }
+        ])
+      );
+    }
+    console.log("estoy aqui klsjdjdkdjklslkd", responses);
+    return responses;
   }
 
   // Handles mesage events with quick replies
@@ -122,19 +131,27 @@ module.exports = class Receive {
   }
 
   handlePayload(payload) {
-    console.log(payload);
+    console.log('im here ksnklfanfn', payload);
 
-    // Log CTA event in FBA
-    GraphAPi.callFBAEventsAPI(this.senderPsid, payload);
-
-    let response;
+    let responses = new Array();
 
     // Set the response based on the payload
     switch (payload) {
       case "GET_STARTED":
         responses = Response.genNuxMessages();
         break;
-
+      case "GET_STARTEED_PAYLOAD":
+        responses = Response.genNuxMessages();
+        break;
+      case "SELECT_CITY":
+        responses = Response.genCitySelectMessage();
+        break;
+      case "BOGOTA_SELECTED":
+        responses = responses.concat(Response.genGotLocationMessage());
+        break;
+      case "HOSPEDAJE_Y_ALBERGUE":
+        responses = responses.concat(Response.genLoggingBogotaMessage());
+        break;
       default:
         responses = [
           {
