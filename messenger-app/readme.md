@@ -27,3 +27,13 @@ Here are some steps for connecting your heroku app:
 ```
 make publish
 ```
+#### Environment Requirements
+
+| Environment   | Description  |
+|---------------|:------------:|
+| APP_ID        |  Application ID |
+| DOMAIN_URL    |  Domain URL     |
+| PAGE_ACCESS_TOKEN | Page Access Token |
+| PAGE_ID | Page ID |
+| VERIFY_TOKEN | Type of verification |
+| PORT | Port for service |
