@@ -1,8 +1,7 @@
-.env
-yarn.lock
-node_modules
+**/**/.env
+**/**/yarn.lock
+**/**/node_modules
 .DS_Store
 **/**/token.pickle
 **/**/credentials.json
 .vscode
-
