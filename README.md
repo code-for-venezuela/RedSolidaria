@@ -1,5 +1,5 @@
-# vinotinto-project
-Code for Venezuela team presents Vinotinto Team
+# RedSolidaria
+Code for Venezuela team, Vinotinto Team, presents: **RedSolidaria** 
 
 [![Build Status](https://travis-ci.com/wenlock/vinotinto-project.svg?branch=master)](https://travis-ci.com/wenlock/vinotinto-project)
 - Project [description](https://github.com/code-for-venezuela/2019-april-codeathon/tree/master/challenges/NXT-DIA)
