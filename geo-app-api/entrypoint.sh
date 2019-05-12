@@ -11,11 +11,15 @@ echo "Working with ${SERVER_PORT}"
 # generate a pickle file
 # we use the environment variable GOOGLE_TOKEN_PICKLE
 
+set -x -v
 cat > ./tools/credentials.json << CREDS
 ${GOOGLE_CREDS_JSON}
 CREDS
-python ./tools/oauth.py
+_CWD="$(pwd)"
+cd ./tools
+python ./oauth.py
 
 ls -altr ./token.pickle
+cd "${_CWD}"
 echo "Starting up server"
 exec python app.py
