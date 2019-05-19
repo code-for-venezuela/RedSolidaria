@@ -41,6 +41,8 @@ You'll need a Google API Key and Google Spreadsheet ID for the database.
 
 ### Generating Google API Key
 1. Navigate to [Quickstart docs](https://developers.google.com/docs/api/quickstart/python) and perform step 1, push button "Enable the Google Docs API".  There should be a link here to take you to the API Console where there is a quickstart project setup. The quickstart project can serve as a development environment.
+   ![image](https://user-images.githubusercontent.com/1907138/57985810-74e2ad00-7a22-11e9-9a0d-93bd774d5631.png)
+
 1. Click the library option and search for the following API's, you'll need each enabled:
    Google Sheets APIs
    Geolocation API
