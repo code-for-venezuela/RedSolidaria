@@ -8,9 +8,9 @@ import json
 import os
 import googlemaps
 import geocoder
+import sys
 
 # for google sheets
-import pickle
 import pandas as pd
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -104,7 +104,7 @@ def descending(full_list):
 
 
 def distance(origins, destination):
-    # try:
+    try:
         app.logger.info(
             'distance origins = %s, destination = %s', origins, destination)
         gmaps = googlemaps.Client(key=API_key)
@@ -119,11 +119,16 @@ def distance(origins, destination):
         destination_result = result['destination_addresses']
         meters = result['rows'][0]['elements'][0]['distance']['value']
         distance_result = meters/1000
-        list = {"origin": origin_result, "destination": destination_result,
-                "distance in kilometers": distance_result}
+        list = {"origin": origin_result,
+                "destination": destination_result,
+                "distance in kilometers": distance_result,
+                "error": "ok"}
         return list
-    # except:
-        # return "invalid"
+    except:
+        return {"origin": origins,
+                "destination": destination,
+                "distance in kilometers": 40233,  # maximum miles so this gets sorted at the end
+                "error": "invalid"}
 
 
 @app.route("/")
