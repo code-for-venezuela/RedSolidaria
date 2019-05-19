@@ -49,12 +49,13 @@ You'll need a Google API Key and Google Spreadsheet ID for the database.
    - Geolocation API
    - Geocoding API
    - Distance Matrix API
+   Google won't show that you have all the API's enabled in one place from the console, however, later on when you setup your credentials on the new Quickstart project, then you'll be able to see the enabled API's while you restrict access to them.
 1. You can also manage the project and change the name if needed, you'll need to enable billing for the project and account.
    Most of the API's are free to a limit however putting a budget can also be useful.
 1. Navigate back to the [API Console](https://console.developers.google.com/apis/dashboard) and choose Credentials
-1. Remove any OAuth credential that is configured.
-1. Choose "Create credentials" and choose "API key". Save the API key presented and this should be setup as the environment variable called **`GOOGLE_API_KEY`**. You can use the command `export GOOGLE_API_KEY=Abcde123`, where Abcde123 is the value of the key.
-1. Choose restrict key option and under the API restrictions section you can choose the Restrict key radio button to select the API's that the key will only be used for. You should see the 3 API's listed in the drop down. If not go back to previous steps to enable those API's. You should now be ready to use the app api service.
+1. Remove any OAuth credential that is configured. Provides interactive user authentication for your project, which won't be used.
+1. Choose "Create credentials" and choose "API key". Save the API key presented and this should be setup as the environment variable called **`GOOGLE_API_KEY`**. We'll choose restrict key option next. You can use the command `export GOOGLE_API_KEY=Abcde123`, where Abcde123 is the value of the key.
+1. Choose restrict key option and under the API restrictions section you can choose the Restrict key radio button to select the API's that the key will only be used for. You should see the 4 API's listed in the drop down. If not go back to previous steps to enable those API's. Save your changes. You should now be ready to use the app api service.
 
 ### Google Spreadsheet ID
 1. We need a spreadsheet ID to lookup source service addresses. Find the services address worksheet from RedSolidaria slack team.
