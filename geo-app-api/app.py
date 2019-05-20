@@ -77,6 +77,10 @@ def reverseGeocode(coordinates):
     # result is a list containing ordered dictionary.
     pprint.pprint(result)
 
+def decending(full_list):
+        return sorted(full_list, key=lambda k: k['distance in kilometers'])
+
+
 #This is for the input of the distance function
 # ###Starting point
 # #This is hardcoded!!! Change to input
@@ -150,7 +154,7 @@ def listorgs():
         coordinate = address_to_coordinates(address)
         dist = distance((origin["lat"], origin["lng"]), (coordinate["lat"], coordinate["lng"]))
         org_entry = {}
-        org_entry = {"address": address, "origin": origin, "coordinate" : coordinate, "distance" : dist}
+        org_entry = {"address": address, "origin": origin, "coordinate" : coordinate, "distance" : descending(dist)}
         results.append(org_entry)
 
     result = json.dumps(results)
