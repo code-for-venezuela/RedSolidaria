@@ -1,8 +1,18 @@
-.env
 yarn.lock
-node_modules
 .DS_Store
 **/**/token.pickle
 **/**/credentials.json
 .vscode
 
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Environment variables file
+.env
