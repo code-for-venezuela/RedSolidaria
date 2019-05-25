@@ -1,9 +1,9 @@
 build:
 	docker build -t geo-app-api .
 
-server:
+server: build
 	echo "starting a local server"
-	docker run --rm -e GOOGLE_API_KEY -e GOOGLE_CREDS_JSON -e PORT=5000 -p 5000:5000  geo-app-api
+	docker run --rm -it -e GOOGLE_API_KEY -e GOOGLE_WORKSHEET_ID -e PORT=5000 -p 5000:5000  geo-app-api
 
 publish:
 	heroku container:login
