@@ -72,6 +72,12 @@ def list_to_df(values):
     # print header
     return df
 
+def filter_value(df):
+
+    val = input('keyword: ') #this keyword will only be searched under the specified column!
+
+    filtered = (df[df.column_name==val]) #column_name needs to be stated
+    return filtered
 
 # TODO move this to a module
 # TODO write some test cases for this
